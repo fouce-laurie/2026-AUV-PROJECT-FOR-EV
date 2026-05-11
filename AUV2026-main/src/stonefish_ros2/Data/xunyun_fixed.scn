@@ -1,0 +1,500 @@
+<?xml version="1.0"?>
+<scenario>
+    <!-- 定义机器人实体: 名字通过宏传入, 不固定在世界坐标带物理属性, 忽略自碰撞 -->
+    <robot name="$(arg robot_name)" fixed="false" self_collisions="false">
+        <!-- 基础连杆 (Base Link): 机器人的主刚体结构。类型为复合结构(compound)，并在水下受物理规律约束(submerged) -->
+		<base_link name="Vehicle" type="compound" physics="submerged">
+            
+            <!-- ====== 外部物理部件 (External Parts) ====== -->
+
+			<external_part name="BuoyancyBlock" type="model" physics="submerged" buoyant="false">
+				<physical>
+                    <!-- 指定 3D 碰撞/水动力网格模型及缩放比例 -->
+					<mesh filename="xy_buoyancy_block.obj" scale="0.001"/>
+                    <!-- 表面厚度，用于部分物理计算 -->
+					<thickness value="0.0015"/>
+                    <!-- 该部件自身的局部原点系，相对于装配点的偏移（通常保持默认零即可） -->
+					<origin rpy="3.1415926 0.0 0" xyz="-0.00000 -0.00000 0.18"/>
+				</physical>
+                <!-- 材质：决定碰撞恢复系数、摩擦力等属性 -->
+				<material name="Fiberglass"/>
+				<mass value="1.5"/>
+                <!-- 外观效果：定义颜色与光泽等渲染属性 -->
+				<look name="yellow"/>
+                <!-- 该部件在整体机器人重心/几何中心 (Base LinkOrigin) 坐标系下的安装位置与姿态 (xyz, rpy) -->
+				<compound_transform rpy="0 0 -2.65359e-06" xyz="0 0 0"/>
+			</external_part>
+
+
+			<external_part name="RightSidePlate" type="model" physics="submerged" buoyant="false">
+				<physical>
+                    <!-- 指定 3D 碰撞/水动力网格模型及缩放比例 -->
+					<mesh filename="xy_right_sideplate.obj" scale="0.001"/>
+                    <!-- 表面厚度，用于部分物理计算 -->
+					<thickness value="0.0015"/>
+                    <!-- 该部件自身的局部原点系，相对于装配点的偏移（通常保持默认零即可） -->
+					<origin rpy="3.1415926 0.0 3.14159" xyz="-0.00000 -0.00000 0.18"/>
+				</physical>
+                <!-- 材质：决定碰撞恢复系数、摩擦力等属性 -->
+				<material name="Fiberglass"/>
+				<mass value="0.75"/>
+                <!-- 外观效果：定义颜色与光泽等渲染属性 -->
+				<look name="white"/>
+                <!-- 该部件在整体机器人重心/几何中心 (Base LinkOrigin) 坐标系下的安装位置与姿态 (xyz, rpy) -->
+				<compound_transform rpy="0 0 3.14159" xyz="0 0 0"/>
+			</external_part>
+
+			<external_part name="LeftSidePlate" type="model" physics="submerged" buoyant="false">
+				<physical>
+                    <!-- 指定 3D 碰撞/水动力网格模型及缩放比例 -->
+					<mesh filename="xy_left_sideplate.obj" scale="0.001"/>
+                    <!-- 表面厚度，用于部分物理计算 -->
+					<thickness value="0.0015"/>
+                    <!-- 该部件自身的局部原点系，相对于装配点的偏移（通常保持默认零即可） -->
+					<origin rpy="3.1415926 0.0 3.14159" xyz="-0.00000 -0.00000 0.18"/>
+				</physical>
+                <!-- 材质：决定碰撞恢复系数、摩擦力等属性 -->
+				<material name="Fiberglass"/>
+				<mass value="0.75"/>
+                <!-- 外观效果：定义颜色与光泽等渲染属性 -->
+				<look name="white"/>
+                <!-- 该部件在整体机器人重心/几何中心 (Base LinkOrigin) 坐标系下的安装位置与姿态 (xyz, rpy) -->
+				<compound_transform rpy="0 0 3.14159" xyz="0 0 0"/>
+			</external_part>
+
+			<external_part name="ForwardBracket" type="model" physics="submerged" buoyant="false">
+				<physical>
+                    <!-- 指定 3D 碰撞/水动力网格模型及缩放比例 -->
+					<mesh filename="xy_forward_bracket.obj" scale="0.001"/>
+                    <!-- 表面厚度，用于部分物理计算 -->
+					<thickness value="0.0015"/>
+                    <!-- 该部件自身的局部原点系，相对于装配点的偏移（通常保持默认零即可） -->
+					<origin rpy="3.1415926 0.0 3.14159" xyz="-0.00000 -0.00000 0.18"/>
+				</physical>
+                <!-- 材质：决定碰撞恢复系数、摩擦力等属性 -->
+				<material name="Fiberglass"/>
+				<mass value="0.25"/>
+                <!-- 外观效果：定义颜色与光泽等渲染属性 -->
+				<look name="white"/>
+                <!-- 该部件在整体机器人重心/几何中心 (Base LinkOrigin) 坐标系下的安装位置与姿态 (xyz, rpy) -->
+				<compound_transform rpy="0 0 3.14159" xyz="0 0 0"/>
+			</external_part>
+
+
+			<external_part name="AftBracket" type="model" physics="submerged" buoyant="false">
+				<physical>
+                    <!-- 指定 3D 碰撞/水动力网格模型及缩放比例 -->
+					<mesh filename="xy_aft_bracket.obj" scale="0.001"/>
+                    <!-- 表面厚度，用于部分物理计算 -->
+					<thickness value="0.0015"/>
+                    <!-- 该部件自身的局部原点系，相对于装配点的偏移（通常保持默认零即可） -->
+					<origin rpy="3.1415926 0.0 3.14159" xyz="-0.00000 -0.00000 0.18"/>
+				</physical>
+                <!-- 材质：决定碰撞恢复系数、摩擦力等属性 -->
+				<material name="Fiberglass"/>
+				<mass value="0.25"/>
+                <!-- 外观效果：定义颜色与光泽等渲染属性 -->
+				<look name="white"/>
+                <!-- 该部件在整体机器人重心/几何中心 (Base LinkOrigin) 坐标系下的安装位置与姿态 (xyz, rpy) -->
+				<compound_transform rpy="0 0 3.14159" xyz="0 0 0"/>
+			</external_part>
+
+			<external_part name="CoreEnclosure" type="model" physics="submerged" buoyant="false">
+				<physical>
+                    <!-- 指定 3D 碰撞/水动力网格模型及缩放比例 -->
+					<mesh filename="xy_core_enclosure.obj" scale="0.001"/>
+                    <!-- 表面厚度，用于部分物理计算 -->
+					<thickness value="0.0015"/>
+                    <!-- 该部件自身的局部原点系，相对于装配点的偏移（通常保持默认零即可） -->
+					<origin rpy="3.1415926 0.0 3.14159" xyz="-0.00000 -0.00000 0.18"/>
+				</physical>
+                <!-- 材质：决定碰撞恢复系数、摩擦力等属性 -->
+				<material name="Fiberglass"/>
+				<mass value="0.25"/>
+                <!-- 外观效果：定义颜色与光泽等渲染属性 -->
+				<look name="white"/>
+                <!-- 该部件在整体机器人重心/几何中心 (Base LinkOrigin) 坐标系下的安装位置与姿态 (xyz, rpy) -->
+				<compound_transform rpy="0 0 3.14159" xyz="0 0 0"/>
+			</external_part>
+
+			<external_part name="InsBasePlate" type="model" physics="submerged" buoyant="false">
+				<physical>
+                    <!-- 指定 3D 碰撞/水动力网格模型及缩放比例 -->
+					<mesh filename="xy_ins_base_plate.obj" scale="0.001"/>
+                    <!-- 表面厚度，用于部分物理计算 -->
+					<thickness value="0.0015"/>
+                    <!-- 该部件自身的局部原点系，相对于装配点的偏移（通常保持默认零即可） -->
+					<origin rpy="3.1415926 0.0 3.14159" xyz="-0.00000 -0.00000 0.18"/>
+				</physical>
+                <!-- 材质：决定碰撞恢复系数、摩擦力等属性 -->
+				<material name="Fiberglass"/>
+				<mass value="0.75"/>
+                <!-- 外观效果：定义颜色与光泽等渲染属性 -->
+				<look name="white"/>
+                <!-- 该部件在整体机器人重心/几何中心 (Base LinkOrigin) 坐标系下的安装位置与姿态 (xyz, rpy) -->
+				<compound_transform rpy="0 0 3.14159" xyz="0 0 0"/>
+			</external_part>
+
+			<external_part name="BatteryPod" type="model" physics="submerged" buoyant="false">
+				<physical>
+                    <!-- 指定 3D 碰撞/水动力网格模型及缩放比例 -->
+					<mesh filename="battery_pod.obj" scale="0.001"/>
+                    <!-- 表面厚度，用于部分物理计算 -->
+					<thickness value="0.0015"/>
+                    <!-- 该部件自身的局部原点系，相对于装配点的偏移（通常保持默认零即可） -->
+					<origin rpy="3.1415926 0.0 3.14159" xyz="-0.00000 -0.00000 0.18"/>
+				</physical>
+                <!-- 材质：决定碰撞恢复系数、摩擦力等属性 -->
+				<material name="Fiberglass"/>
+				<mass value="0.5"/>
+                <!-- 外观效果：定义颜色与光泽等渲染属性 -->
+				<look name="white"/>
+                <!-- 该部件在整体机器人重心/几何中心 (Base LinkOrigin) 坐标系下的安装位置与姿态 (xyz, rpy) -->
+				<compound_transform rpy="0 0 3.14159" xyz="0 0 0"/>
+			</external_part>
+
+			<external_part name="Port0" type="model" physics="submerged" buoyant="true">
+				<physical>
+					<mesh filename="duct_hydro.obj" scale="0.35"/>
+					<origin rpy="-1.57 0.0 3.14159" xyz="-0.00000 -0.00000 0.0"/>
+				</physical>
+				<material name="Neutral"/>
+				<look name="duct"/>
+				<compound_transform rpy="0 0 -2.36159" xyz="0.16485 -0.12935 0.1095"/>
+			</external_part>
+
+			<external_part name="Port1" type="model" physics="submerged" buoyant="true">
+				<physical>
+					<mesh filename="duct_hydro.obj" scale="0.35"/>
+					<origin rpy="-1.57 0.0 3.14159" xyz="-0.00000 -0.00000 0.0"/>
+				</physical>
+				<material name="Neutral"/>
+				<look name="duct"/>
+				<compound_transform rpy="0 0 2.36159" xyz="0.16485 0.12935 0.1095"/>
+			</external_part>
+
+			<external_part name="Port2" type="model" physics="submerged" buoyant="true">
+				<physical>
+					<mesh filename="duct_hydro.obj" scale="0.35"/>
+					<origin rpy="0.0 -1.57 3.14159" xyz="-0.00000 -0.00000 0.0"/>
+				</physical>
+				<material name="Neutral"/>
+				<look name="duct"/>
+				<compound_transform rpy="0 0 -0.00159265" xyz="0 0.13 0.015"/>
+			</external_part>
+
+			<external_part name="Port3" type="model" physics="submerged" buoyant="true">
+				<physical>
+					<mesh filename="duct_hydro.obj" scale="0.35"/>
+					<origin rpy="0.0 -1.57 3.14159" xyz="-0.00000 -0.00000 0.0"/>
+				</physical>
+				<material name="Neutral"/>
+				<look name="duct"/>
+				<compound_transform rpy="0 0 3.14159" xyz="0 -0.13 0.015"/>
+			</external_part>
+
+			<external_part name="Port4" type="model" physics="submerged" buoyant="true">
+				<physical>
+					<mesh filename="duct_hydro.obj" scale="0.35"/>
+					<origin rpy="-1.57 0.0 3.14159" xyz="-0.00000 -0.00000 0.0"/>
+				</physical>
+				<material name="Neutral"/>
+				<look name="duct"/>
+				<compound_transform rpy="0 0 -0.785593" xyz="-0.16485 -0.12935 0.1095"/>
+			</external_part>
+
+			<external_part name="Port5" type="model" physics="submerged" buoyant="true">
+				<physical>
+					<mesh filename="duct_hydro.obj" scale="0.35"/>
+					<origin rpy="-1.57 0.0 3.14159" xyz="-0.00000 -0.00000 0.0"/>
+				</physical>
+				<material name="Neutral"/>
+				<look name="duct"/>
+				<compound_transform rpy="0 0 0.785593" xyz="-0.16485 0.12935 0.1095"/>
+			</external_part>
+
+            <!-- ====== 内部物理部件 (Internal Parts) ====== -->
+            <!-- 内部部件通常表示密闭耐压舱，提供主要浮力和整船质量分布，用于严格校准重心(CG)和浮心(CB) -->
+			<internal_part name="BatteryCylinder" type="cylinder" physics="submerged" buoyant="true">
+                <!-- 定义形状和尺寸，这里是圆柱体 -->
+				<dimensions radius="0.065" height="0.3"/>
+				<origin rpy="0 0 3.14159" xyz="0 0 0"/>
+				<material name="Neutral"/>
+                <!-- 定义该舱室的质量 (如果设定好各个舱室的质量和偏移位置，求解器会自动积分算出整船的质量中心) -->
+				<mass value="7.2552"/>
+				<look name="manipulator"/>
+				<compound_transform rpy="0 1.571 3.14159" xyz="0.0495 0 0.1805"/>
+			</internal_part>
+
+			<internal_part name="PortCylinder" type="cylinder" physics="submerged" buoyant="true">
+				<dimensions radius="0.065" height="0.5"/>
+				<origin rpy="0 0 3.14159" xyz="0 0 0"/>
+				<material name="Neutral"/>
+				<mass value="2.5"/>
+				<look name="manipulator"/>
+				<compound_transform rpy="0 1.571 3.14159" xyz="0.0245 0.175 -0.1695"/>
+			</internal_part>
+
+			<internal_part name="StarboardCylinder" type="cylinder" physics="submerged" buoyant="true">
+				<dimensions radius="0.065" height="0.5"/>
+				<origin rpy="0 0 3.14159" xyz="0 0 0"/>
+				<material name="Neutral"/>
+				<mass value="2.5"/>
+				<look name="manipulator"/>
+				<compound_transform rpy="0 1.571 3.14159" xyz="0.0245 -0.175 -0.1695"/>
+			</internal_part>
+		</base_link>
+        
+		
+        <!-- ====== 传感器与通讯模块 (Sensors and Comms) ====== -->
+        
+        <!-- USBL 超短基线定位设备 -->
+        <comm name="USBL" type="usbl" device_id="1">
+            <!-- 设定要通讯的母船或信标目标设备ID -->
+        	<connect device_id="2"/>
+        	<link name="Vehicle"/>
+            <!-- 安装在机器人机体上的位置 -->
+	        <origin rpy="0 0 -2.65359e-06" xyz="0 0 0.5"/>
+            <!-- 发射锥角视场和最大测距有效范围 -->
+        	<specs min_vertical_fov="0.0" max_vertical_fov="220.0" range="1000.0"/>
+        	<!-- 自动Ping测频 -->
+            <autoping rate="10.0"/>
+            <!-- 传感器固有噪声(模拟真实世界误差)：测距、水平角误差和垂直角误差 -->
+        	<noise range="0.01" horizontal_angle="0.05" vertical_angle="0.1"/>
+			<resolution range="0.1" angle="0.1"/>
+        </comm>
+		
+        <!-- Odometry 里程计真值 (理想情况的传感器)，通常用于向系统告知仿真体绝对位置 -->
+		<sensor name="dynamics" type="odometry" rate="30.0">
+			<link name="Vehicle"/>
+			<origin rpy="0 0 -2.65359e-06" xyz="0 0 0"/>
+            <!-- 直接向 ROS 发布话题 -->
+			<ros_publisher topic="/auv/odometry"/>
+		</sensor>
+
+        <!-- 深度压力传感器 -->
+		<sensor name="pressure" type="pressure" rate="5.0">
+			<link name="Vehicle"/>
+			<origin rpy="0 0 -2.65359e-06" xyz="-0.24 0.175 -0.2"/>
+			<noise pressure="5.0"/>
+			<ros_publisher topic="/auv/pressure"/>
+		</sensor>
+
+        <!-- DVL 多普勒计程仪，用于发送声波测量相对水底的速度 -->
+		<sensor name="dvl" type="dvl" rate="20.0">
+			<history samples="1000"/>
+			<link name="Vehicle"/>
+            <!-- rpy="3.1416 0.0 -0.785" 决定它斜向下照射的角度及偏航对齐 -->
+			<origin rpy="3.1416 0 -0.785003" xyz="-0.375 0 0.2"/>
+			<specs beam_angle="30.0"/> <!-- 波束俯仰角 -->
+            <!-- 模拟范围: x,y,z方向最大测量速度均为9.0m/s，对地测量高度0.5米到81米 -->
+			<range velocity="9.0 9.0 9.0" altitude_min="0.5" altitude_max="81.0"/>
+            <!-- 对水流层（如果无法打海底，打杂质跟踪水流）的要求 -->
+			<water_layer minimum_layer_size="5.0" boundary_near="10.0" boundary_far="30.0"/>
+			<noise velocity="0.0015" altitude="0.001"/> <!-- 速度及高度白噪声 -->
+            <!-- 将测量数值通过 Topic 发布 -->
+			<ros_publisher topic="/auv/dvl" altitude_topic="/auv/dvl_altitude"/>
+		</sensor>
+
+        <!-- 惯性导航单元 (IMU)，含九轴数据 -->
+		<sensor name="imu_filter" type="imu" rate="20.0">
+			<history samples="1000"/>
+			<link name="Vehicle"/>
+			<origin rpy="0 0 -2.65359e-06" xyz="0 0 0"/>
+			<ros_publisher topic="/auv/imu"/>
+		</sensor>
+
+		<sensor name="front_cam_left" type="camera" rate="10.0">
+			<link name="Vehicle"/>
+			<origin rpy="1.5708 0 1.5708" xyz="0.25 -0.02825 0.25"/>
+			<specs resolution_x="1280" resolution_y="960" horizontal_fov="34.19"/>
+			<ros_publisher topic="/sim/front_cam/left"/>
+		</sensor>
+
+		<sensor name="front_cam_right" type="camera" rate="10.0">
+			<link name="Vehicle"/>
+			<origin rpy="1.5708 0 1.5708" xyz="0.25 0.02825 0.25"/>
+			<specs resolution_x="1280" resolution_y="960" horizontal_fov="34.19"/>
+			<ros_publisher topic="/sim/front_cam/right"/>
+		</sensor>
+
+		<sensor name="down_cam_left" type="camera" rate="30.0">
+			<link name="Vehicle"/>
+			<origin rpy="0 0 1.5708" xyz="0 -0.03765 0.21"/>
+			<specs resolution_x="1280" resolution_y="960" horizontal_fov="32.18"/>
+			<ros_publisher topic="/sim/down_cam/left"/>
+		</sensor>
+
+		<sensor name="down_cam_right" type="camera" rate="30.0">
+			<link name="Vehicle"/>
+			<origin rpy="0 0 1.5708" xyz="0 0.03765 0.21"/>
+			<specs resolution_x="1280" resolution_y="960" horizontal_fov="32.18"/>
+			<ros_publisher topic="/sim/down_cam/right"/>
+		</sensor>
+
+		<!-- ====== 执行机构 / 推进器 (Actuators/Thrusters) ====== -->
+
+		<actuator name="Thruster0" type="thruster">
+			<link name="Vehicle"/>
+            <!-- 这个安装 rpy: 偏航角 -2.3561 (-135度) 决定其推力矢量方向 -->
+			<origin rpy="0 0 0.780003" xyz="-0.16485 0.12935 0.1095"/>
+            <!-- 最大设定点 (归一控制量 -1到1 被缩放为真实的物理转速) -->
+			<specs max_setpoint="${1000.0/60.0*2.0*pi}" inverted_setpoint="false" normalized_setpoint="true"/>
+            <!-- 螺旋桨尺寸和模型 -->
+			<propeller diameter="0.1" right="true">
+				<mesh filename="propeller.obj" scale="0.35" />
+				<material name="Neutral" />
+				<look name="propeller" />
+			</propeller>
+            <!-- 电机闭环动态响应 PI 调参参数 (模拟真实螺旋桨响应并非瞬间达到目标转速) -->
+			<rotor_dynamics type="mechanical_pi">
+				<rotor_inertia value="0.05"/>
+				<kp value="1.0"/>
+				<ki value="0.5"/>
+				<ilimit value="2.0"/>
+			</rotor_dynamics>
+            <!-- 推力模型设定：从转速映射到推力和扭矩 (CT计算参数) -->
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="1" reverse="1"/>
+				<torque_coeff value="0.05"/>
+			</thrust_model>
+		</actuator>
+
+		<actuator name="Thruster1" type="thruster">
+			<link name="Vehicle"/>
+            <!-- 这个安装 rpy: 偏航角 -2.3561 (-135度) 决定其推力矢量方向 -->
+			<origin rpy="0 0 -0.780003" xyz="-0.16485 -0.12935 0.1095"/>
+            <!-- 最大设定点 (归一控制量 -1到1 被缩放为真实的物理转速) -->
+			<specs max_setpoint="${1000.0/60.0*2.0*pi}" inverted_setpoint="true" normalized_setpoint="true"/>
+            <!-- 螺旋桨尺寸和模型 -->
+			<propeller diameter="0.1" right="false">
+				<mesh filename="propeller.obj" scale="0.35" />
+				<material name="Neutral" />
+				<look name="propeller" />
+			</propeller>
+            <!-- 电机闭环动态响应 PI 调参参数 (模拟真实螺旋桨响应并非瞬间达到目标转速) -->
+			<rotor_dynamics type="mechanical_pi">
+				<rotor_inertia value="0.05"/>
+				<kp value="1.0"/>
+				<ki value="0.5"/>
+				<ilimit value="2.0"/>
+			</rotor_dynamics>
+            <!-- 推力模型设定：从转速映射到推力和扭矩 (CT计算参数) -->
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="1" reverse="1"/>
+				<torque_coeff value="0.05"/>
+			</thrust_model>
+		</actuator>
+
+		<actuator name="Thruster2" type="thruster">
+			<link name="Vehicle"/>
+			<origin rpy="0 -1.5708 -2.65359e-06" xyz="0 -0.13 0.015"/>
+            <!-- 最大设定点 (归一控制量 -1到1 被缩放为真实的物理转速) -->
+			<specs max_setpoint="${1000.0/60.0*2.0*pi}" inverted_setpoint="false" normalized_setpoint="true"/>
+            <!-- 螺旋桨尺寸和模型 -->
+			<propeller diameter="0.1" right="true">
+				<mesh filename="propeller.obj" scale="0.35" />
+				<material name="Neutral" />
+				<look name="propeller" />
+			</propeller>
+            <!-- 电机闭环动态响应 PI 调参参数 (模拟真实螺旋桨响应并非瞬间达到目标转速) -->
+			<rotor_dynamics type="mechanical_pi">
+				<rotor_inertia value="0.05"/>
+				<kp value="1.0"/>
+				<ki value="0.5"/>
+				<ilimit value="2.0"/>
+			</rotor_dynamics>
+            <!-- 推力模型设定：从转速映射到推力和扭矩 (CT计算参数) -->
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="1" reverse="1"/>
+				<torque_coeff value="0.05"/>
+			</thrust_model>
+		</actuator>
+
+		<actuator name="Thruster3" type="thruster">
+			<link name="Vehicle"/>
+			<origin rpy="0 -1.5708 -2.65359e-06" xyz="0 0.13 0.015"/>
+            <!-- 最大设定点 (归一控制量 -1到1 被缩放为真实的物理转速) -->
+			<specs max_setpoint="${1000.0/60.0*2.0*pi}" inverted_setpoint="true" normalized_setpoint="true"/>
+            <!-- 螺旋桨尺寸和模型 -->
+			<propeller diameter="0.1" right="false">
+				<mesh filename="propeller.obj" scale="0.35" />
+				<material name="Neutral" />
+				<look name="propeller" />
+			</propeller>
+            <!-- 电机闭环动态响应 PI 调参参数 (模拟真实螺旋桨响应并非瞬间达到目标转速) -->
+			<rotor_dynamics type="mechanical_pi">
+				<rotor_inertia value="0.05"/>
+				<kp value="1.0"/>
+				<ki value="0.5"/>
+				<ilimit value="2.0"/>
+			</rotor_dynamics>
+            <!-- 推力模型设定：从转速映射到推力和扭矩 (CT计算参数) -->
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="1" reverse="1"/>
+				<torque_coeff value="0.05"/>
+			</thrust_model>
+		</actuator>
+
+		<actuator name="Thruster4" type="thruster">
+			<link name="Vehicle"/>
+            <!-- 这个安装 rpy: 偏航角 -2.3561 (-135度) 决定其推力矢量方向 -->
+			<origin rpy="0 0 2.356" xyz="0.16485 0.12935 0.1095"/>
+            <!-- 最大设定点 (归一控制量 -1到1 被缩放为真实的物理转速) -->
+			<specs max_setpoint="${1000.0/60.0*2.0*pi}" inverted_setpoint="false" normalized_setpoint="true"/>
+            <!-- 螺旋桨尺寸和模型 -->
+			<propeller diameter="0.1" right="true">
+				<mesh filename="propeller.obj" scale="0.35" />
+				<material name="Neutral" />
+				<look name="propeller" />
+			</propeller>
+            <!-- 电机闭环动态响应 PI 调参参数 (模拟真实螺旋桨响应并非瞬间达到目标转速) -->
+			<rotor_dynamics type="mechanical_pi">
+				<rotor_inertia value="0.05"/>
+				<kp value="1.0"/>
+				<ki value="0.5"/>
+				<ilimit value="2.0"/>
+			</rotor_dynamics>
+            <!-- 推力模型设定：从转速映射到推力和扭矩 (CT计算参数) -->
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="1" reverse="1"/>
+				<torque_coeff value="0.05"/>
+			</thrust_model>
+		</actuator>
+
+		<actuator name="Thruster5" type="thruster">
+			<link name="Vehicle"/>
+            <!-- 这个安装 rpy: 偏航角 -2.3561 (-135度) 决定其推力矢量方向 -->
+			<origin rpy="0 0 -2.356" xyz="0.16485 -0.12935 0.1095"/>
+            <!-- 最大设定点 (归一控制量 -1到1 被缩放为真实的物理转速) -->
+			<specs max_setpoint="${1000.0/60.0*2.0*pi}" inverted_setpoint="true" normalized_setpoint="true"/>
+            <!-- 螺旋桨尺寸和模型 -->
+			<propeller diameter="0.1" right="false">
+				<mesh filename="propeller.obj" scale="0.35" />
+				<material name="Neutral" />
+				<look name="propeller" />
+			</propeller>
+            <!-- 电机闭环动态响应 PI 调参参数 (模拟真实螺旋桨响应并非瞬间达到目标转速) -->
+			<rotor_dynamics type="mechanical_pi">
+				<rotor_inertia value="0.05"/>
+				<kp value="1.0"/>
+				<ki value="0.5"/>
+				<ilimit value="2.0"/>
+			</rotor_dynamics>
+            <!-- 推力模型设定：从转速映射到推力和扭矩 (CT计算参数) -->
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="1" reverse="1"/>
+				<torque_coeff value="0.05"/>
+			</thrust_model>
+		</actuator>
+		
+		<!-- 统一的 ROS 接口指令：
+		     会将推力数组消息 (例如Float64MultiArray 类型) 直接按顺序解析赋予所有 thruster，
+		     并同时发布当前状态矩阵 (如当前的转速等)。-->
+		<ros_subscriber thrusters="/auv/thrusters_cmd"/>
+		<ros_publisher thrusters="/auv/thrusters_state"/>
+        
+        <!-- 定义整个机器人在外界大场景出生(Spawn)时的绝对位置，值由宏传入 -->
+		<world_transform rpy="0.0 0.0 0.0" xyz="$(arg robot_position)"/>
+	</robot>
+</scenario>

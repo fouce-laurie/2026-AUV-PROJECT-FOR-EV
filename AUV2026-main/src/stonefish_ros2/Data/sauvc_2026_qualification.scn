@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<scenario>
+	<environment>
+		<ned latitude="1.35" longitude="103.82"/>
+		<ocean>
+			<water density="1000.0" jerlov="0.22"/>
+			<waves height="0.0"/>
+			<current type="uniform">
+				<velocity xyz="0.0 0.0 0.0"/>
+			</current>
+		</ocean>
+		<atmosphere>
+			<sun azimuth="120.0" elevation="55.0"/>
+		</atmosphere>
+	</environment>
+
+	<materials>
+		<material name="Neutral" density="1000.0" restitution="0.5"/>
+		<material name="Concrete" density="2400.0" restitution="0.2"/>
+		<material name="PVC" density="1380.0" restitution="0.3"/>
+		<material name="Plastic" density="1100.0" restitution="0.3"/>
+		<friction_table>
+			<friction material1="Neutral" material2="Neutral" static="0.4" dynamic="0.2"/>
+			<friction material1="Neutral" material2="Concrete" static="0.3" dynamic="0.2"/>
+			<friction material1="Neutral" material2="PVC" static="0.4" dynamic="0.2"/>
+			<friction material1="Neutral" material2="Plastic" static="0.4" dynamic="0.2"/>
+			<friction material1="Concrete" material2="Concrete" static="0.8" dynamic="0.7"/>
+			<friction material1="PVC" material2="PVC" static="0.5" dynamic="0.4"/>
+			<friction material1="Plastic" material2="Plastic" static="0.5" dynamic="0.4"/>
+		</friction_table>
+	</materials>
+
+	<looks>
+		<look name="pool_floor" rgb="0.75 0.82 0.90" roughness="0.8"/>
+		<look name="pool_wall" rgb="0.70 0.78 0.88" roughness="0.8"/>
+		<look name="zone_mark" rgb="0.10 0.95 0.95" roughness="0.4"/>
+		<look name="line_mark" rgb="0.95 0.95 0.95" roughness="0.4"/>
+		<look name="frame" rgb="0.88 0.88 0.88" roughness="0.5"/>
+		<look name="orange" rgb="1.0 0.45 0.0" roughness="0.3"/>
+	</looks>
+
+	<!-- Coordinate convention uses NED: X forward, Y lateral, Z down, water surface Z=0, bottom Z=1.6. -->
+	<!-- Pool: X in [0,25], Y in [-8,8], Z in [0,1.6]. -->
+	<static name="PoolBottom" type="plane">
+		<material name="Concrete"/>
+		<look name="pool_floor"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="12.5 0.0 1.6"/>
+	</static>
+
+	<static name="PoolWallNorth" type="box">
+		<dimensions xyz="25.0 0.2 1.6"/>
+		<material name="Concrete"/>
+		<look name="pool_wall"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="12.5 8.1 0.8"/>
+	</static>
+	<static name="PoolWallSouth" type="box">
+		<dimensions xyz="25.0 0.2 1.6"/>
+		<material name="Concrete"/>
+		<look name="pool_wall"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="12.5 -8.1 0.8"/>
+	</static>
+	<static name="PoolWallStart" type="box">
+		<dimensions xyz="0.2 16.0 1.6"/>
+		<material name="Concrete"/>
+		<look name="pool_wall"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="-0.1 0.0 0.8"/>
+	</static>
+	<static name="PoolWallFar" type="box">
+		<dimensions xyz="0.2 16.0 1.6"/>
+		<material name="Concrete"/>
+		<look name="pool_wall"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="25.1 0.0 0.8"/>
+	</static>
+
+	<!-- Starting zone: 1.4m x 1.4m PVC frame, with shore-side edge touching X=0 wall. -->
+	<static name="StartingZoneFrameShoreSide" type="box">
+		<dimensions xyz="0.04 1.4 0.04"/>
+		<material name="PVC"/>
+		<look name="frame"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="0.02 0.0 0.02"/>
+	</static>
+	<static name="StartingZoneFrameFarSide" type="box">
+		<dimensions xyz="0.04 1.4 0.04"/>
+		<material name="PVC"/>
+		<look name="frame"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="1.38 0.0 0.02"/>
+	</static>
+	<static name="StartingZoneFrameLeft" type="box">
+		<dimensions xyz="1.4 0.04 0.04"/>
+		<material name="PVC"/>
+		<look name="frame"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="0.70 -0.68 0.02"/>
+	</static>
+	<static name="StartingZoneFrameRight" type="box">
+		<dimensions xyz="1.4 0.04 0.04"/>
+		<material name="PVC"/>
+		<look name="frame"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="0.70 0.68 0.02"/>
+	</static>
+
+	<!-- Qualification starting line: 1m wide section on pool wall X=0. -->
+	<static name="QualificationStartLine" type="box">
+		<dimensions xyz="0.02 1.0 1.6"/>
+		<material name="Plastic"/>
+		<look name="line_mark"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="0.01 0.0 0.8"/>
+	</static>
+
+	<!-- Qualification gate at X=10, width 1.5m, full depth 1.6m (bottom to surface). -->
+	<static name="QualGateLeft" type="cylinder">
+		<dimensions radius="0.04" height="1.6"/>
+		<material name="PVC"/>
+		<look name="orange"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="10.0 -0.75 0.8"/>
+	</static>
+	<static name="QualGateRight" type="cylinder">
+		<dimensions radius="0.04" height="1.6"/>
+		<material name="PVC"/>
+		<look name="orange"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="10.0 0.75 0.8"/>
+	</static>
+	<static name="QualGateTop" type="box">
+		<dimensions xyz="0.08 1.58 0.08"/>
+		<material name="PVC"/>
+		<look name="orange"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="10.0 0.0 0.04"/>
+	</static>
+
+	<include file="girona500auv_full.scn">
+		<arg name="robot_name" value="GIRONA500"/>
+		<arg name="robot_position" value="0.70 0.0 0.50"/>
+	</include>
+</scenario>

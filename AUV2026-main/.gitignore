@@ -1,0 +1,60 @@
+# ROS 2 build artifacts
+build/
+install/
+log/
+
+# images and datasets used to train yolo
+img/
+images/
+
+# Python build and cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.tox/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+bin/
+include/
+develop-eggs/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Local environment files
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# C++ / CMake (if any separate ones exist)
+*.o
+*.a
+*.so
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake

@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<scenario>
+	<environment>
+		<ned latitude="1.35" longitude="103.82"/>
+		<ocean>
+			<water density="1000.0" jerlov="0.22"/>
+			<waves height="0.0"/>
+			<current type="uniform">
+				<velocity xyz="0.0 0.0 0.0"/>
+			</current>
+		</ocean>
+		<atmosphere>
+			<sun azimuth="120.0" elevation="55.0"/>
+		</atmosphere>
+	</environment>
+
+	<materials>
+		<material name="Neutral" density="1000.0" restitution="0.5"/>
+		<material name="Concrete" density="2400.0" restitution="0.2"/>
+		<material name="PVC" density="1380.0" restitution="0.3"/>
+		<material name="Plastic" density="1100.0" restitution="0.3"/>
+		<friction_table>
+			<friction material1="Neutral" material2="Neutral" static="0.4" dynamic="0.2"/>
+			<friction material1="Neutral" material2="Concrete" static="0.3" dynamic="0.2"/>
+			<friction material1="Neutral" material2="PVC" static="0.4" dynamic="0.2"/>
+			<friction material1="Neutral" material2="Plastic" static="0.4" dynamic="0.2"/>
+			<friction material1="Concrete" material2="Concrete" static="0.8" dynamic="0.7"/>
+			<friction material1="PVC" material2="PVC" static="0.5" dynamic="0.4"/>
+			<friction material1="Plastic" material2="Plastic" static="0.5" dynamic="0.4"/>
+		</friction_table>
+	</materials>
+
+	<looks>
+		<look name="pool_floor" rgb="0.75 0.82 0.90" roughness="0.8"/>
+		<look name="pool_wall" rgb="0.70 0.78 0.88" roughness="0.8"/>
+		<look name="zone_mark" rgb="0.10 0.95 0.95" roughness="0.4"/>
+		<look name="orange" rgb="1.0 0.45 0.0" roughness="0.3"/>
+		<look name="red" rgb="0.95 0.10 0.10" roughness="0.3"/>
+		<look name="green" rgb="0.10 0.75 0.20" roughness="0.3"/>
+		<look name="yellow" rgb="0.95 0.9 0.10" roughness="0.3"/>
+		<look name="blue" rgb="0.10 0.35 0.95" roughness="0.3"/>
+		<look name="drum_red" rgb="0.85 0.10 0.10" roughness="0.4"/>
+		<look name="drum_blue" rgb="0.10 0.25 0.85" roughness="0.4"/>
+		<look name="frame" rgb="0.85 0.85 0.85" roughness="0.5"/>
+	</looks>
+
+	<!-- Pool dimensions follow SAUVC 2026 rulebook: 25m x 16m. -->
+	<static name="PoolBottom" type="plane">
+		<material name="Concrete"/>
+		<look name="pool_floor"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 2.5"/>
+	</static>
+
+	<static name="PoolWallNorth" type="box">
+		<dimensions xyz="25.0 0.2 2.5"/>
+		<material name="Concrete"/>
+		<look name="pool_wall"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="0.0 8.1 1.25"/>
+	</static>
+	<static name="PoolWallSouth" type="box">
+		<dimensions xyz="25.0 0.2 2.5"/>
+		<material name="Concrete"/>
+		<look name="pool_wall"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="0.0 -8.1 1.25"/>
+	</static>
+	<static name="PoolWallWest" type="box">
+		<dimensions xyz="0.2 16.4 2.5"/>
+		<material name="Concrete"/>
+		<look name="pool_wall"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="-12.6 0.0 1.25"/>
+	</static>
+	<static name="PoolWallEast" type="box">
+		<dimensions xyz="0.2 16.4 2.5"/>
+		<material name="Concrete"/>
+		<look name="pool_wall"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="12.6 0.0 1.25"/>
+	</static>
+
+	<!-- Starting zone: 140cm x 140cm at water surface. -->
+	<static name="StartingZone" type="box">
+		<dimensions xyz="1.4 1.4 0.02"/>
+		<material name="Plastic"/>
+		<look name="zone_mark"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="-11.6 0.0 0.02"/>
+	</static>
+
+	<!-- Qualification gate: 150cm wide, full pool depth, orange on both sides. -->
+	<static name="QualGateLeft" type="cylinder">
+		<dimensions radius="0.04" height="2.5"/>
+		<material name="PVC"/>
+		<look name="orange"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="-1.5 0.75 1.25"/>
+	</static>
+	<static name="QualGateRight" type="cylinder">
+		<dimensions radius="0.04" height="2.5"/>
+		<material name="PVC"/>
+		<look name="orange"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="-1.5 -0.75 1.25"/>
+	</static>
+	<static name="QualGateTop" type="box">
+		<dimensions xyz="0.08 1.58 0.08"/>
+		<material name="PVC"/>
+		<look name="orange"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="-1.5 0.0 0.04"/>
+	</static>
+
+	<!-- Navigation gate: 150cm x 100cm, red/green sides at ~16m from start zone. -->
+	<static name="NavGateLeftRed" type="box">
+		<dimensions xyz="0.08 0.08 1.0"/>
+		<material name="PVC"/>
+		<look name="red"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="4.4 0.79 2.0"/>
+	</static>
+	<static name="NavGateRightGreen" type="box">
+		<dimensions xyz="0.08 0.08 1.0"/>
+		<material name="PVC"/>
+		<look name="green"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="4.4 -0.79 2.0"/>
+	</static>
+	<static name="NavGateTop" type="box">
+		<dimensions xyz="0.08 1.66 0.08"/>
+		<material name="PVC"/>
+		<look name="frame"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="4.4 0.0 1.52"/>
+	</static>
+
+	<!-- Orange flare: ~15cm diameter, full depth. -->
+	<static name="OrangeFlare" type="cylinder">
+		<dimensions radius="0.075" height="2.5"/>
+		<material name="PVC"/>
+		<look name="orange"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="2.0 3.0 1.25"/>
+	</static>
+
+	<!-- Target acquisition drums: 60cm diameter, 30cm depth. -->
+	<static name="DrumBlue" type="cylinder">
+		<dimensions radius="0.30" height="0.30"/>
+		<material name="Plastic"/>
+		<look name="drum_blue"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="8.5 -1.5 2.35"/>
+	</static>
+	<static name="DrumRed1" type="cylinder">
+		<dimensions radius="0.30" height="0.30"/>
+		<material name="Plastic"/>
+		<look name="drum_red"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="8.5 1.5 2.35"/>
+	</static>
+	<static name="DrumRed2" type="cylinder">
+		<dimensions radius="0.30" height="0.30"/>
+		<material name="Plastic"/>
+		<look name="drum_red"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="10.2 -1.5 2.35"/>
+	</static>
+	<static name="DrumRed3" type="cylinder">
+		<dimensions radius="0.30" height="0.30"/>
+		<material name="Plastic"/>
+		<look name="drum_red"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="10.2 1.5 2.35"/>
+	</static>
+
+	<!-- Communication flares: 80cm tall, ~1.6cm diameter. -->
+	<static name="CommFlareRed" type="cylinder">
+		<dimensions radius="0.008" height="0.8"/>
+		<material name="PVC"/>
+		<look name="red"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="6.0 5.0 2.1"/>
+	</static>
+	<static name="CommFlareYellow" type="cylinder">
+		<dimensions radius="0.008" height="0.8"/>
+		<material name="PVC"/>
+		<look name="yellow"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="9.0 4.0 2.1"/>
+	</static>
+	<static name="CommFlareBlue" type="cylinder">
+		<dimensions radius="0.008" height="0.8"/>
+		<material name="PVC"/>
+		<look name="blue"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="7.5 6.5 2.1"/>
+	</static>
+
+	<include file="girona500auv_full.scn">
+		<arg name="robot_name" value="GIRONA500"/>
+		<arg name="robot_position" value="-11.6 0.0 0.30"/>
+	</include>
+</scenario>

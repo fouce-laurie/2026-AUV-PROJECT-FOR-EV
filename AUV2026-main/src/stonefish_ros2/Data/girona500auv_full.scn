@@ -1,0 +1,344 @@
+<?xml version="1.0"?>
+<scenario>
+    <robot name="$(arg robot_name)" fixed="false" self_collisions="false">
+		<base_link name="Vehicle" type="compound" physics="submerged">
+			<external_part name="HullBottom" type="model" physics="submerged" buoyant="false">
+				<physical>
+					<mesh filename="hull_hydro.obj" scale="0.5"/>
+					<thickness value="0.005"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Fiberglass"/>
+				<look name="yellow"/>
+				<compound_transform rpy="0.0 0.0 0.0" xyz="-0.0245 0.0 0.1805"/>
+			</external_part>
+
+			<external_part name="HullPort" type="model" physics="submerged" buoyant="false">
+				<physical>
+					<mesh filename="hull_hydro.obj" scale="0.5"/>
+					<thickness value="0.0015"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Fiberglass"/>
+				<look name="yellow"/>
+				<compound_transform rpy="0.0 0.0 0.0" xyz="-0.0245 -0.175 -0.1695"/>
+			</external_part>
+
+			<external_part name="HullStarboard" type="model" physics="submerged" buoyant="false">
+				<physical>
+					<mesh filename="hull_hydro.obj" scale="0.5"/>
+					<thickness value="0.0015"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Fiberglass"/>
+				<look name="yellow"/>
+				<compound_transform rpy="0.0 0.0 0.0" xyz="-0.0245 0.175 -0.1695"/>
+			</external_part>
+
+			<external_part name="VBarStern" type="model" physics="submerged" buoyant="false">
+				<physical>
+					<mesh filename="vbar_hydro.obj" scale="0.5"/>
+					<thickness value="0.0015"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Aluminium"/>
+				<look name="gray"/>
+				<compound_transform rpy="0.0 0.0 0.0" xyz="-0.1495 0.0 0.1055"/>
+			</external_part>
+
+			<external_part name="VBarBow" type="model" physics="submerged" buoyant="false">
+				<physical>
+					<mesh filename="vbar_hydro.obj" scale="0.5"/>
+					<thickness value="0.0015"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Aluminium"/>
+				<look name="gray"/>
+				<compound_transform rpy="0.0 0.0 0.0" xyz="0.1255 0.0 0.1055"/>
+			</external_part>
+
+			<external_part name="DuctSway" type="model" physics="submerged" buoyant="true">
+				<physical>
+					<mesh filename="duct_hydro.obj" scale="0.5"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Neutral"/>
+				<look name="duct"/>
+				<compound_transform rpy="0.0 3.14 1.57" xyz="-0.03135 0.01535 -0.0095"/>
+			</external_part>
+
+			<external_part name="DuctSurgePort" type="model" physics="submerged" buoyant="true">
+				<physical>
+					<mesh filename="duct_hydro.obj" scale="0.5"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Neutral"/>
+				<look name="duct"/>
+				<compound_transform rpy="3.14 0.0 0.0" xyz="-0.16485 -0.12935 -0.0095"/>
+			</external_part>
+
+			<external_part name="DuctSurgeStarboard" type="model" physics="submerged" buoyant="true">
+				<physical>
+					<mesh filename="duct_hydro.obj" scale="0.5"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Neutral"/>
+				<look name="duct"/>
+				<compound_transform rpy="0.0 0.0 0.0" xyz="-0.16485 0.12935 -0.0095"/>
+			</external_part>
+
+			<external_part name="DuctHeaveStern" type="model" physics="submerged" buoyant="true">
+				<physical>
+					<mesh filename="duct_hydro.obj" scale="0.5"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Neutral"/>
+				<look name="duct"/>
+				<compound_transform rpy="0.0 -1.57 1.57" xyz="-0.29135 0.0 -0.15685"/>
+			</external_part>
+
+			<external_part name="DuctHeaveBow" type="model" physics="submerged" buoyant="true">
+				<physical>
+					<mesh filename="duct_hydro.obj" scale="0.5"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Neutral"/>
+				<look name="duct"/>
+				<compound_transform rpy="0.0 -1.57 -1.57" xyz="0.26735 0.0 -0.15685"/>
+			</external_part>
+
+			<internal_part name="BatteryCylinder" type="cylinder" physics="submerged" buoyant="true">
+				<dimensions radius="0.065" height="0.3"/>
+				<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				<material name="Neutral"/>
+				<mass value="9.0"/>
+				<look name="manipulator"/>
+				<compound_transform rpy="0.0 1.571 0.0" xyz="-0.0495 0.0 0.1805"/>
+			</internal_part>
+
+			<internal_part name="PortCylinder" type="cylinder" physics="submerged" buoyant="true">
+				<dimensions radius="0.065" height="0.5"/>
+				<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				<material name="Neutral"/>
+				<mass value="2.5"/>
+				<look name="manipulator"/>
+				<compound_transform rpy="0.0 1.571 0.0" xyz="-0.0245 -0.175 -0.1695"/>
+			</internal_part>
+
+			<internal_part name="StarboardCylinder" type="cylinder" physics="submerged" buoyant="true">
+				<dimensions radius="0.065" height="0.5"/>
+				<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				<material name="Neutral"/>
+				<mass value="2.5"/>
+				<look name="manipulator"/>
+				<compound_transform rpy="0.0 1.571 0.0" xyz="-0.0245 0.175 -0.1695"/>
+			</internal_part>
+		</base_link>
+        
+		
+        <comm name="USBL" type="usbl" device_id="1">
+        	<connect device_id="2"/>
+        	<link name="Vehicle"/>
+	        	<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.5"/>
+        	<specs min_vertical_fov="0.0" max_vertical_fov="220.0" range="1000.0"/>
+        	<autoping rate="10.0"/>
+        	<noise range="0.01" horizontal_angle="0.05" vertical_angle="0.1"/>
+			<resolution range="0.1" angle="0.1"/>
+        </comm>
+		
+		<sensor name="dynamics" type="odometry" rate="30.0">
+			<link name="Vehicle"/>
+			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+			<ros_publisher topic="/auv/odometry"/>
+		</sensor>
+
+		<sensor name="pressure" type="pressure" rate="5.0">
+			<link name="Vehicle"/>
+			<origin rpy="0.0 0.0 0.0" xyz="-0.24 0.175 -0.2"/>
+			<noise pressure="5.0"/>
+			<ros_publisher topic="/auv/pressure"/>
+		</sensor>
+
+		<sensor name="dvl" type="dvl" rate="20.0">
+			<history samples="1000"/>
+			<link name="Vehicle"/>
+			<origin rpy="3.1416 0.0 -0.785" xyz="-0.375 0.0 0.2"/>
+			<specs beam_angle="30.0"/>
+			<range velocity="9.0 9.0 9.0" altitude_min="0.5" altitude_max="81.0"/>
+			<water_layer minimum_layer_size="5.0" boundary_near="10.0" boundary_far="30.0"/>
+			<noise velocity="0.0015" altitude="0.001"/>
+			<ros_publisher topic="/auv/dvl" altitude_topic="/auv/dvl_altitude"/>
+		</sensor>
+
+		<sensor name="imu_filter" type="imu" rate="20.0">
+			<history samples="1000"/>
+			<link name="Vehicle"/>
+			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+			<ros_publisher topic="/auv/imu"/>
+		</sensor>
+
+		<sensor name="front_cam_left" type="camera" rate="10.0">
+			<link name="Vehicle"/>
+			<!-- 前视左右摄像头：基线与标定匹配（baseline ≈ 56.5mm，总距 ≈ 0.0565m） -->
+			<origin rpy="1.5708 0 1.5708" xyz="0.25 0.02825 0.25"/>
+			<specs resolution_x="1280" resolution_y="960" horizontal_fov="34.19"/>
+			<ros_publisher topic="/sim/front_cam/left"/>
+		</sensor>
+
+		<sensor name="front_cam_right" type="camera" rate="10.0">
+			<link name="Vehicle"/>
+			<!-- 右侧与左侧对称 -->
+			<origin rpy="1.5708 0 1.5708" xyz="0.25 -0.02825 0.25"/>
+			<specs resolution_x="1280" resolution_y="960" horizontal_fov="34.19"/>
+			<ros_publisher topic="/sim/front_cam/right"/>
+		</sensor>
+
+		<sensor name="down_cam_left" type="camera" rate="30.0">
+			<link name="Vehicle"/>
+			<!-- 俯视左右摄像头：基线与标定匹配（baseline ≈ 75.3mm，总距 ≈ 0.0753m） -->
+			<origin rpy="0.0 0.0 1.5708" xyz="0.0 0.03765 0.21"/>
+			<specs resolution_x="1280" resolution_y="960" horizontal_fov="32.18"/>
+			<ros_publisher topic="/sim/down_cam/left"/>
+		</sensor>
+
+		<sensor name="down_cam_right" type="camera" rate="30.0">
+			<link name="Vehicle"/>
+			<!-- 右侧与左侧对称 -->
+			<origin rpy="0.0 0.0 1.5708" xyz="0.0 -0.03765 0.21"/>
+			<specs resolution_x="1280" resolution_y="960" horizontal_fov="32.18"/>
+			<ros_publisher topic="/sim/down_cam/right"/>
+		</sensor>
+
+		<actuator name="ThrusterSurgePort" type="thruster">
+			<link name="Vehicle"/>
+			<origin rpy="0.0 0.0 -2.3561" xyz="0.23079 -0.18109 -0.0147"/>
+			<specs max_setpoint="${1000.0/60.0*2.0*pi}" inverted_setpoint="true" normalized_setpoint="true"/>
+			<propeller diameter="0.08" right="true">
+				<mesh filename="propeller.obj" scale="1.0" />
+				<material name="Neutral" />
+				<look name="propeller" />
+			</propeller>
+			<rotor_dynamics type="mechanical_pi">
+				<!-- <rotor_inertia value="0.05"/> -->
+				<kp value="1.0"/>
+				<ki value="0.5"/>
+				<ilimit value="2.0"/>
+			</rotor_dynamics>
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="1" reverse="1"/>
+				<torque_coeff value="0.05"/>
+			</thrust_model>
+		</actuator>
+
+		<actuator name="ThrusterSurgeStarboard" type="thruster">
+			<link name="Vehicle"/>
+			<origin rpy="0.0 0.0 2.3561" xyz="0.23079 0.18109 -0.0147"/>
+			<specs max_setpoint="${1000.0/60.0*2.0*pi}" inverted_setpoint="true" normalized_setpoint="true"/>
+			<propeller diameter="0.08" right="true">
+				<mesh filename="propeller.obj" scale="1.0" />
+				<material name="Neutral" />
+				<look name="propeller" />
+			</propeller>
+			<rotor_dynamics type="mechanical_pi">
+				<!-- <rotor_inertia value="0.05"/> -->
+				<kp value="1.0"/>
+				<ki value="0.5"/>
+				<ilimit value="2.0"/>
+			</rotor_dynamics>
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="1" reverse="1"/>
+				<torque_coeff value="0.05"/>
+			</thrust_model>
+		</actuator>
+
+		<actuator name="ThrusterHeaveBow" type="thruster">
+			<link name="Vehicle"/>
+			<origin rpy="0.0 1.571 0.0" xyz="0.0 0.14 -0.12000"/>
+			<specs max_setpoint="${1000.0/60.0*2.0*pi}" inverted_setpoint="true" normalized_setpoint="true"/>
+			<propeller diameter="0.1" right="true">
+				<mesh filename="propeller.obj" scale="1.0" />
+				<material name="Neutral" />
+				<look name="propeller" />
+			</propeller>
+			<rotor_dynamics type="mechanical_pi">
+				<!-- <rotor_inertia value="0.05"/> -->
+				<kp value="1.0"/>
+				<ki value="0.5"/>
+				<ilimit value="2.0"/>
+			</rotor_dynamics>
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="1" reverse="1"/>
+				<torque_coeff value="0.05"/>
+			</thrust_model>
+		</actuator>
+
+		<actuator name="ThrusterHeaveStern" type="thruster">
+			<link name="Vehicle"/>
+			<origin rpy="0.0 1.571 0.0" xyz="0.0 -0.14 -0.12000"/>
+			<specs max_setpoint="${1000.0/60.0*2.0*pi}" inverted_setpoint="true" normalized_setpoint="true"/>
+			<propeller diameter="0.1" right="true">
+				<mesh filename="propeller.obj" scale="1.0" />
+				<material name="Neutral" />
+				<look name="propeller" />
+			</propeller>
+			<rotor_dynamics type="mechanical_pi">
+				<!-- <rotor_inertia value="0.05"/> -->
+				<kp value="1.0"/>
+				<ki value="0.5"/>
+				<ilimit value="2.0"/>
+			</rotor_dynamics>
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="1" reverse="1"/>
+				<torque_coeff value="0.05"/>
+			</thrust_model>
+		</actuator>
+
+		<actuator name="ThrusterSwayBow" type="thruster">
+			<link name="Vehicle"/>
+			<origin rpy="0.0 0.0 -0.7853" xyz="-0.23079 -0.18109 -0.0147"/>
+			<specs max_setpoint="${1000.0/60.0*2.0*pi}" inverted_setpoint="true" normalized_setpoint="true"/>
+			<propeller diameter="0.08" right="true">
+				<mesh filename="propeller.obj" scale="1.0" />
+				<material name="Neutral" />
+				<look name="propeller" />
+			</propeller>
+			<rotor_dynamics type="mechanical_pi">
+				<!-- <rotor_inertia value="0.05"/> -->
+				<kp value="1.0"/>
+				<ki value="0.5"/>
+				<ilimit value="2.0"/>
+			</rotor_dynamics>
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="1" reverse="1"/>
+				<torque_coeff value="0.05"/>
+			</thrust_model>
+		</actuator>
+
+		<actuator name="ThrusterSwayStern" type="thruster">
+			<link name="Vehicle"/>
+			<origin rpy="0.0 0.0 0.7853" xyz="-0.23079 0.18109 -0.0147"/>
+			<specs max_setpoint="${1000.0/60.0*2.0*pi}" inverted_setpoint="true" normalized_setpoint="true"/>
+			<propeller diameter="0.08" right="true">
+				<mesh filename="propeller.obj" scale="1.0" />
+				<material name="Neutral" />
+				<look name="propeller" />
+			</propeller>
+			<rotor_dynamics type="mechanical_pi">
+				<!-- <rotor_inertia value="0.05"/> -->
+				<kp value="1.0"/>
+				<ki value="0.5"/>
+				<ilimit value="2.0"/>
+			</rotor_dynamics>
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="1" reverse="1"/>
+				<torque_coeff value="0.05"/>
+			</thrust_model>
+		</actuator>
+		
+		
+		<ros_subscriber thrusters="/auv/thrusters_cmd"/>
+		<ros_publisher thrusters="/auv/thrusters_state"/>
+        
+		<world_transform rpy="0.0 0.0 0.0" xyz="$(arg robot_position)"/>
+	</robot>
+</scenario>

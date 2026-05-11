@@ -1,0 +1,25 @@
+{
+    "simulation": {
+        "current_scenario": "finals",
+        "scenarios": {
+            "test": {
+                "name": "默认测试场景",
+                "description": "基础水下测试环境"
+            },
+            "qualification": {
+                "name": "资格赛场景",
+                "description": "SAUVC 2026 资格赛场地"
+            },
+            "finals": {
+                "name": "决赛场景",
+                "description": "SAUVC 2026 决赛场地"
+            }
+        },
+        "enable_ai": true,
+        "enable_depth": true
+    },
+    "runtime": {
+        "auto_source_env": true,
+        "repo_root": "/home/origin/UUV2025"
+    }
+}

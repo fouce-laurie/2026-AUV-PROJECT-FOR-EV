@@ -1,0 +1,56 @@
+### 工具函数清单（逻辑/用途/用法）
+- `_make_rel_cmd()`（movement.py）：用途：构造相对位移指令模板；逻辑：固定 `cs=2` 并清零 `rx/ry`；用法：在所有相对移动前调用返回 `TargetPosDown` 对象。
+- `_publish_rel_cmd(cmd, x=0, y=0, z=0, rz=0)`（movement.py）：用途：统一发布相对移动；逻辑：写入 `pos` 后发布；用法：传入模板与目标增量，避免重复字段赋值。
+- `_step_move(axis, value, step, delay, label, log_steps=False)`（movement.py）：用途：分步逼近目标位移；逻辑：按步长循环发布→最后等待到位；用法：在 movez/movex/movey/moverz 中复用。
+- `_target_in_base_from_backpoint()`（movement.py）：用途：计算回退点相对位移；逻辑：回退点世界坐标→机体系；用法：供 back/fast_back/backy 使用。
+- `_target_in_base_from_target()`（movement.py）：用途：计算目标点相对位移；逻辑：目标点世界坐标→机体系；用法：供 mtty/mttz/mttzxy/mttxf 使用。
+- `move_wait()`（movement.py）：用途：等待到位；逻辑：检查 `tpos_inbase` 误差是否进入 `AllowedError`；用法：分步移动末尾调用，返回布尔。
+- `movez(z)`（movement.py）：用途：相对深度移动；逻辑：按 `Step["z"]` 分段推进；用法：传入相对深度（m）。
+- `fast_movez(z)`（movement.py）：用途：快速深度微调；逻辑：单次发布相对位移；用法：用于小幅快速修正。
+- `movex(x)`（movement.py）：用途：相对横移；逻辑：按 `Step["x"]` 分段推进；用法：传入相对横移（m）。
+- `fast_movex(x)`（movement.py）：用途：快速横移微调；逻辑：单次发布相对位移；用法：用于小幅快速修正。
+- `movey(y)`（movement.py）：用途：相对前后移动；逻辑：按 `Step["y"]` 分段推进；用法：传入相对前后（m）。
+- `fast_movey(y)`（movement.py）：用途：快速前后微调；逻辑：单次发布相对位移；用法：用于小幅快速修正。
+- `moverz(rz)`（movement.py）：用途：相对转向；逻辑：按 `Step["rz"]` 分段旋转；用法：传入相对角度（deg）。
+- `fast_moverz(rz)`（movement.py）：用途：快速转向；逻辑：单次发布相对旋转；用法：用于快速调整朝向。
+- `movexy(x, y)`（movement.py）：用途：平面移动到相对点；逻辑：先转向再前进；用法：传入相对 (x,y)（m）。
+- `movexyz(x, y, z)`（movement.py）：用途：立体相对移动；逻辑：先调深度再平面移动；用法：传入相对 (x,y,z)。
+- `setz(z)`（movement.py）：用途：设置绝对深度；逻辑：`cs=0` 保持当前姿态/位置；用法：传入目标深度（m）。
+- `setrz(rz)`（movement.py）：用途：设置绝对航向；逻辑：`cs=0` 保持位置只调航向；用法：传入目标角度（deg）。
+- `setp()`（movement.py）：用途：保存回退点；逻辑：记录当前 `pos` 到 `backpoint`；用法：在任务前调用。
+- `back()`（movement.py）：用途：回退到记录点；逻辑：深度→平面→姿态；用法：与 `setp()` 配合。
+- `fast_back()`（movement.py）：用途：快速回退；逻辑：大步长快速修正；用法：用于紧急回退。
+- `backy()`（movement.py）：用途：回退（先平面后深度）；逻辑：平面回位再调深度；用法：用于需要先水平回位的场景。
+- `mtty(dy, dz)`（movement.py）：用途：对目标点做深度+前后偏置；逻辑：目标点坐标→机体系→移动；用法：配合 `search()` 定位后的目标。
+- `mttzxy(dz, dx, dy)`（movement.py）：用途：对目标点做三轴偏置；逻辑：叠加偏置再逐轴移动；用法：用于精细对位。
+- `mttxf(dx, dy)`（movement.py）：用途：对目标点做横移/前后偏置；逻辑：先横移后前后调整；用法：用于横向修正。
+- `mttz(dy, dz)`（movement.py）：用途：对目标点做前后与深度修正；逻辑：先平面再深度；用法：用于接近目标并校深度。
+- `mttpos(x, y, z, rz, dy)`（movement.py）：用途：设置并对准目标点；逻辑：写入 `self.target` 后执行 `mttz`/转向；用法：任务内直接调用定位目标。
+- `mttzpos(x, y, z, dy)`（movement.py）：用途：设置目标点并平面+深度调整；逻辑：写入目标后执行修正流程；用法：用于只需平面/深度对位的任务。
+- `mttpos_amend(x, y, z, rz, dy)`（movement.py）：用途：带修正参数的对准流程；逻辑：在 `mttpos` 基础上加修正；用法：用于经验性补偿。
+- `mttzpos_amend(x, y, z, dy)`（movement.py）：用途：带修正参数的平面/深度对位；逻辑：在 `mttzpos` 基础上加修正；用法：用于经验性补偿。
+- `pid_update(error)`（tasks.py）：用途：PID 计算工具；逻辑：P/I/D 叠加并限幅；用法：巡线等闭环控制时调用。
+- `cam2robot(clas, timeout, cam)`（tasks.py）：用途：视觉定位工具；逻辑：多次检测取均值并返回目标相对位移；用法：需要更稳定的目标位置时调用。
+- `cam2robot_fast(clas, timeout, cam)`（tasks.py）：用途：快速视觉定位；逻辑：较少采样快速输出；用法：用于实时闭环控制。
+- `pow(s)`（tasks.py）：用途：机械爪开合控制；逻辑：设置舵机角度并发布；用法：`s=1`/`s=0` 控制夹爪状态。
+- `led(led0, led1)`（tasks.py）：用途：LED 控制；逻辑：发布 `LedControllers`；用法：在任务过程提示状态。
+- `delay(t)`（tasks.py）：用途：等待工具；逻辑：简单 `sleep`；用法：需要等待稳定时调用。
+
+任务函数清单（逻辑/用途/用法）
+- `search(name, cam)`：用途：定位单一目标并写入 `self.target`；逻辑：调用检测服务→坐标系转换→多次均值；用法：`cam` 选 `front/down`。
+- `search2(name, cam, dy, dz, z_target, times)`：用途：多次搜索并在未命中时迭代；逻辑：长时间采样→均值→移动→递归检查；用法：用于确认抓取结果或循环搜目标。
+- `search4(name1, name2, dx, dy, dz, z_target, rz_target, times, distance)`：用途：基架/目标复合定位；逻辑：搜基架→调整姿态→估计法线→计算偏移；用法：比赛特定复合场景。
+- `start()`：用途：任务启动流程；逻辑：记录起点→LED 提示→夹爪→开 PID；用法：任务执行前调用一次。
+- `end()`：用途：任务结束流程；逻辑：关闭 PID；用法：任务结束时调用。
+- `run(task)`：用途：任务调度入口；逻辑：根据 `task["name"]` 分发到具体函数；用法：任务列表执行时调用。
+- `graball(color, depth, timeout, pr, k, step_time)`：用途：综合抓取流程；逻辑：视觉伺服定位→移动→夹取；用法：任务阶段的抓取操作。
+- `thrball(pr, timeout, k, step_time)`：用途：投球流程；逻辑：对准投球框→微调→投放；用法：投球任务。
+- `pass_door(num)`：用途：过门流程；逻辑：检测门框→对准→前进→旋转；用法：`num` 为门类别索引。
+- `grab_golf(kind, dx, dy, down_depth, up_depth)`：用途：抓高尔夫球；逻辑：搜索→对准→下潜夹取→上浮；用法：`kind` 为球颜色。
+- `put_t(num, dy, dz)`：用途：T 插放置；逻辑：对准目标→渐进前进→夹爪释放；用法：`num` 为检测类别索引。
+- `endfloat()`：用途：终局浮起/定位板任务；逻辑：搜索目标→对准→上浮；用法：比赛结束阶段。
+- `throw_golf(dy, depth)`：用途：投球任务；逻辑：搜索篮筐→对准→下潜→释放；用法：配合 `search` 与 `mttxf`。
+- `strike_ball(num)`：用途：撞球任务；逻辑：搜索→对准→冲撞→返回；用法：`num` 为球类别索引。
+- `strike_ball3(num1, num2, num3)`：用途：连续撞三球；逻辑：依次调用 `strike_ball`；用法：组合任务。
+- `line_qd()`：用途：巡线（复杂版）；逻辑：图像二值化→误差计算→PID 控制；用法：视觉巡线任务。
+- `line(ys_dep)`：用途：巡线（简化版）；逻辑：持续读取分割图并调整位姿；用法：设置巡线目标深度/参数。

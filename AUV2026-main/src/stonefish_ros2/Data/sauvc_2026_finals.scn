@@ -1,0 +1,293 @@
+<?xml version="1.0"?>
+<scenario>
+	<environment>
+		<ned latitude="1.35" longitude="103.82"/>
+		<ocean>
+			<water density="1000.0" jerlov="0.2"/>
+			<waves height="0.0"/>
+			<current type="uniform">
+				<velocity xyz="0.0 0.0 0.0"/>
+			</current>
+		</ocean>
+		<atmosphere>
+			<sun azimuth="150.0" elevation="65.0" gain="5"/>
+		</atmosphere>
+	</environment>
+
+	<materials>
+		<material name="Neutral" density="1000.0" restitution="0.5"/>
+		<material name="Concrete" density="2400.0" restitution="0.2"/>
+		<material name="PVC" density="1380.0" restitution="0.3"/>
+		<material name="Plastic" density="1100.0" restitution="0.3"/>
+		<friction_table>
+			<friction material1="Neutral" material2="Neutral" static="0.4" dynamic="0.2"/>
+			<friction material1="Neutral" material2="Concrete" static="0.3" dynamic="0.2"/>
+			<friction material1="Neutral" material2="PVC" static="0.4" dynamic="0.2"/>
+			<friction material1="Neutral" material2="Plastic" static="0.4" dynamic="0.2"/>
+			<friction material1="Concrete" material2="Concrete" static="0.8" dynamic="0.7"/>
+			<friction material1="PVC" material2="PVC" static="0.5" dynamic="0.4"/>
+			<friction material1="Plastic" material2="Plastic" static="0.5" dynamic="0.4"/>
+		</friction_table>
+	</materials>
+
+	<looks>
+		<look name="pool_floor" rgb="0.75 0.82 0.90" roughness="0.8"/>
+		<look name="pool_wall" rgb="0.70 0.78 0.88" roughness="0.6"/>
+		<look name="zone_mark" rgb="0.10 0.95 0.95" roughness="0.4"/>
+		<look name="orange" rgb="1.0 0.45 0.0" roughness="0.3"/>
+		<look name="red" rgb="0.95 0.10 0.10" roughness="0.3"/>
+		<look name="green" rgb="0.10 0.75 0.20" roughness="0.3"/>
+		<look name="yellow" rgb="0.95 0.9 0.10" roughness="0.3"/>
+		<look name="blue" rgb="0.10 0.35 0.95" roughness="0.3"/>
+		<look name="flare_orange" rgb="1.0 0.45 0.0" roughness="0.4"/>
+		<look name="flare_black_edge" rgb="0.05 0.05 0.05" roughness="0.6"/>
+		<look name="flare_weight" rgb="0.1 0.1 0.1" roughness="0.9"/>
+		<look name="drum_red" rgb="0.85 0.10 0.10" roughness="0.4"/>
+		<look name="drum_blue" rgb="0.10 0.25 0.85" roughness="0.4"/>
+		<look name="golf_ball" rgb="0.97 0.97 0.97" roughness="0.2"/>
+		<look name="frame" rgb="0.85 0.85 0.85" roughness="0.5"/>
+		<look name="target_mat" rgb="0.2 0.7 0.2" roughness="0.9"/>
+		<look name="weight_black" rgb="0.05 0.05 0.05" roughness="0.8"/>
+	</looks>
+
+	<!-- Coordinate convention uses NED: X forward, Y lateral, Z down, water surface Z=0, bottom Z=1.6. -->
+	<!-- Finals arena: X in [0,25], Y in [-8,8], Z in [0,1.6]. -->
+	<static name="PoolBottom" type="plane">
+		<material name="Concrete"/>
+		<look name="pool_floor"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="12.5 0.0 1.6"/>
+	</static>
+
+	<static name="PoolWallNorth" type="box">
+		<dimensions xyz="25.0 0.2 1.6"/>
+		<material name="Concrete"/>
+		<look name="pool_wall"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="12.5 8.1 0.8"/>
+	</static>
+	<static name="PoolWallSouth" type="box">
+		<dimensions xyz="25.0 0.2 1.6"/>
+		<material name="Concrete"/>
+		<look name="pool_wall"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="12.5 -8.1 0.8"/>
+	</static>
+	<static name="PoolWallStart" type="box">
+		<dimensions xyz="0.2 16.0 1.6"/>
+		<material name="Concrete"/>
+		<look name="pool_wall"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="-0.1 0.0 0.8"/>
+	</static>
+	<static name="PoolWallFar" type="box">
+		<dimensions xyz="0.2 16.0 1.6"/>
+		<material name="Concrete"/>
+		<look name="pool_wall"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="25.1 0.0 0.8"/>
+	</static>
+
+	<!-- Starting zone: 1.4m x 1.4m PVC frame, with shore-side edge touching X=0 wall. -->
+	<static name="StartingZoneFrameShoreSide" type="box">
+		<dimensions xyz="0.04 1.4 0.04"/>
+		<material name="PVC"/>
+		<look name="frame"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="0.02 0.0 0.02"/>
+	</static>
+	<static name="StartingZoneFrameFarSide" type="box">
+		<dimensions xyz="0.04 1.4 0.04"/>
+		<material name="PVC"/>
+		<look name="frame"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="1.38 0.0 0.02"/>
+	</static>
+	<static name="StartingZoneFrameLeft" type="box">
+		<dimensions xyz="1.4 0.04 0.04"/>
+		<material name="PVC"/>
+		<look name="frame"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="0.70 -0.68 0.02"/>
+	</static>
+	<static name="StartingZoneFrameRight" type="box">
+		<dimensions xyz="1.4 0.04 0.04"/>
+		<material name="PVC"/>
+		<look name="frame"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="0.70 0.68 0.02"/>
+	</static>
+
+	<!-- Navigation gate at X=16. Port is Y- (red), starboard is Y+ (green). -->
+	<static name="NavGateLeftRed" type="box">
+		<dimensions xyz="0.08 0.08 1.0"/>
+		<material name="PVC"/>
+		<look name="red"/>
+		<world_transform rpy="0.0 0.1 0.05" xyz="16.0 -0.75 1.1"/>
+	</static>
+	<static name="NavGateRightGreen" type="box">
+		<dimensions xyz="0.08 0.08 1.0"/>
+		<material name="PVC"/>
+		<look name="green"/>
+		<world_transform rpy="0.0 -0.05 -0.02" xyz="16.0 0.75 1.1"/>
+	</static>
+	<static name="NavGateTop" type="box">
+		<dimensions xyz="0.08 1.58 0.08"/>
+		<material name="PVC"/>
+		<look name="frame"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="16.0 0.0 0.64"/>
+	</static>
+
+	<!-- Orange flare deployed inside X in [4,8], Y in [-8,8]. -->
+	<!-- Optimized with orange body, black edges and base weight for better feature recognition. -->
+	<static name="OrangeFlareWeight" type="cylinder">
+		<dimensions radius="0.15" height="0.05"/>
+		<material name="Neutral"/>
+		<look name="flare_weight"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="6.0 2.8 1.55"/>
+	</static>
+
+	<static name="OrangeFlareBody" type="box">
+		<dimensions xyz="0.02 0.15 1.5"/>
+		<material name="PVC"/>
+		<look name="flare_orange"/>
+		<world_transform rpy="0.0 0.1 0.0" xyz="6.0 2.8 0.8"/>
+	</static>
+
+	<static name="OrangeFlareEdgeLeft" type="box">
+		<dimensions xyz="0.022 0.01 1.5"/>
+		<material name="PVC"/>
+		<look name="flare_black_edge"/>
+		<world_transform rpy="0.0 0.1 0.0" xyz="6.0 2.875 0.8"/>
+	</static>
+
+	<static name="OrangeFlareEdgeRight" type="box">
+		<dimensions xyz="0.022 0.01 1.5"/>
+		<material name="PVC"/>
+		<look name="flare_black_edge"/>
+		<world_transform rpy="0.0 0.1 0.0" xyz="6.0 2.725 0.8"/>
+	</static>
+
+	<!-- Four target drums in target zone X in [16,25], fixed at pool bottom. -->
+	<!-- Target mat added under drums to match reality (green carpet). -->
+	<static name="TargetMat" type="box">
+		<dimensions xyz="4.0 10.0 0.01"/>
+		<material name="Neutral"/>
+		<look name="target_mat"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="21.5 0.0 1.595"/>
+	</static>
+
+	<static name="DrumBlue" type="cylinder">
+		<dimensions radius="0.30" height="0.30"/>
+		<material name="Plastic"/>
+		<look name="drum_blue"/>
+		<world_transform rpy="0.05 0.0 0.1" xyz="24.0 3.6 1.45"/>
+	</static>
+	<static name="DrumRed1" type="cylinder">
+		<dimensions radius="0.30" height="0.30"/>
+		<material name="Plastic"/>
+		<look name="drum_red"/>
+		<world_transform rpy="-0.03 0.05 -0.05" xyz="24.0 1.2 1.45"/>
+	</static>
+	<static name="DrumRed2" type="cylinder">
+		<dimensions radius="0.30" height="0.30"/>
+		<material name="Plastic"/>
+		<look name="drum_red"/>
+		<world_transform rpy="0.02 -0.04 0.08" xyz="24.0 -1.2 1.45"/>
+	</static>
+	<static name="DrumRed3" type="cylinder">
+		<dimensions radius="0.30" height="0.30"/>
+		<material name="Plastic"/>
+		<look name="drum_red"/>
+		<world_transform rpy="-0.06 0.02 -0.12" xyz="24.0 -3.6 1.45"/>
+	</static>
+
+	<!-- Colored flares (80cm x 1.6cm) with trigger golf balls at top. -->
+	<!-- Added random tilts to poles for realism. -->
+	<static name="CommFlareRedWeight" type="cylinder">
+		<dimensions radius="0.12" height="0.04"/>
+		<material name="Neutral"/>
+		<look name="weight_black"/>
+		<world_transform rpy="0.0 0.3 0.15" xyz="13.0 1.8 1.58"/>
+	</static>
+	<static name="CommFlareRed" type="cylinder">
+		<dimensions radius="0.008" height="0.8"/>
+		<material name="PVC"/>
+		<look name="red"/>
+		<world_transform rpy="0.05 0.1 -0.05" xyz="13.0 1.8 1.2"/>
+	</static>
+
+	<!-- Added mid-pole weight for CommFlareRed -->
+	<static name="CommFlareRedMidWeight" type="cylinder">
+		<dimensions radius="0.02" height="0.12"/>
+		<material name="Neutral"/>
+		<look name="weight_black"/>
+		<world_transform rpy="0.0 0.123 0.0" xyz="13.0 1.8 1.1"/>
+	</static>
+	<static name="CommFlareRedMidWeight" type="cylinder">
+		<dimensions radius="0.02" height="0.12"/>
+		<material name="Neutral"/>
+		<look name="weight_black"/>
+		<world_transform rpy="0.23 -0.123 -0.1" xyz="13.0 1.8 1.3"/>
+	</static>
+	<static name="CommFlareYellowWeight" type="cylinder">
+		<dimensions radius="0.12" height="0.04"/>
+		<material name="Neutral"/>
+		<look name="weight_black"/>
+		<world_transform rpy="0.1 -0.2 0.0" xyz="11.5 -2.2 1.58"/>
+	</static>
+	<static name="CommFlareYellWeight" type="cylinder">
+		<dimensions radius="0.12" height="0.04"/>
+		<material name="Neutral"/>
+		<look name="weight_black"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="10.5 0.2 1.58"/>
+	</static>
+	<static name="CommFlareBlueow" type="cylinder">
+		<dimensions radius="0.008" height="0.8"/>
+		<material name="PVC"/>
+		<look name="yellow"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="11.5 -2.2 1.2"/>
+	</static>
+	<!-- Added mid-pole weight for CommFlareYellow -->
+	<static name="CommFlareYellowMidWeight1" type="cylinder">
+		<dimensions radius="0.02" height="0.12"/>
+		<material name="Neutral"/>
+		<look name="weight_black"/>
+		<world_transform rpy="0.03 0.012 0.023" xyz="11.5 -2.2 1.22"/>
+	</static>	<static name="CommFlareBlue" type="cylinder">
+		<dimensions radius="0.008" height="0.8"/>
+		<material name="PVC"/>
+		<look name="blue"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="10.5 0.2 1.2"/>
+	</static>
+
+	<!-- Added mid-pole weight for CommFlareYellow -->
+	<static name="CommFlareYellowMidWeight2" type="cylinder">
+		<dimensions radius="0.02" height="0.12"/>
+		<material name="Neutral"/>
+		<look name="weight_black"/>
+		<world_transform rpy="0.03 -0.012 0.013" xyz="11.5 -2.2 1.02"/>
+	</static>
+	<!-- Added mid-pole weight for CommFlareBlue -->
+	<static name="CommFlareBlueMidWeight" type="cylinder">
+		<dimensions radius="0.02" height="0.12"/>
+		<material name="Neutral"/>
+		<look name="weight_black"/>
+		<world_transform rpy="0.02 0.1 0.22" xyz="10.5 0.2 1.25"/>
+	</static>
+
+	<static name="GolfBallRed" type="sphere">
+		<dimensions radius="0.008"/>
+		<material name="Plastic"/>
+		<look name="golf_ball"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="13.0 1.8 0.79"/>
+	</static>
+	<static name="GolfBallYellow" type="sphere">
+		<dimensions radius="0.008"/>
+		<material name="Plastic"/>
+		<look name="golf_ball"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="11.5 -2.2 0.79"/>
+	</static>
+	<static name="GolfBallBlue" type="sphere">
+		<dimensions radius="0.008"/>
+		<material name="Plastic"/>
+		<look name="golf_ball"/>
+		<world_transform rpy="0.0 0.0 0.0" xyz="10.5 0.2 0.79"/>
+	</static>
+
+	<include file="xunyun.scn">
+		<arg name="robot_name" value="GIRONA500"/>
+		<arg name="robot_position" value="0.70 0.0 0.50"/>
+	</include>
+</scenario>

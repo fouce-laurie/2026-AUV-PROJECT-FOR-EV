@@ -1,0 +1,104 @@
+{
+    "tasks": [
+        {
+            "name": "setz",
+            "params": {
+                "z": 0.8
+            }
+        },
+        {
+            "name": "move_wait",
+            "params": {}
+        },
+        {
+            "name": "mttpos",
+            "params": {
+                "x": 3.8,
+                "y": 0.0,
+                "z": 0.8,
+                "rz": 0.0,
+                "dx": 0.2
+            }
+        },
+        {
+            "name": "movey",
+            "params": {
+                "y": -5.0
+            }
+        },
+        {
+            "name": "setrz_step",
+            "params": {
+                "rz": 80.0,
+                "drz": 2.0,
+                "mode": 0.0
+            }
+        },
+        {
+            "name": "setrz_step",
+            "params": {
+                "rz": 0.0,
+                "drz": 2.0,
+                "mode": 0.0
+            }
+        },
+        {
+            "name": "movey",
+            "params": {
+                "y": 10.0
+            }
+        },
+        {
+            "name": "pass_gate_avoiding_obstacles",
+            "params": {}
+        },
+        {
+            "name": "movex",
+            "params": {
+                "x": 3.0
+            }
+        },
+        {
+            "name": "setz",
+            "params": {
+                "z": 0.8
+            }
+        },
+        {
+            "name": "crash_target",
+            "params": {
+                "target_id": 1
+            }
+        },
+        {
+            "name": "setz",
+            "params": {
+                "z": 0.8
+            }
+        },
+        {
+            "name": "crash_target",
+            "params": {
+                "target_id": 7
+            }
+        },
+        {
+            "name": "setz",
+            "params": {
+                "z": 0.8
+            }
+        },
+        {
+            "name": "crash_target",
+            "params": {
+                "target_id": 5
+            }
+        },
+        {
+            "name": "setz",
+            "params": {
+                "z": -1
+            }
+        }
+    ]
+}

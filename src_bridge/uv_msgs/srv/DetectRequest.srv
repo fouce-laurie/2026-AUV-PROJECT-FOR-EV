@@ -1,0 +1,8 @@
+sensor_msgs/Image imagein
+string target
+string stero
+---
+uint8 s
+float32 x
+float32 y
+float32 z

@@ -181,12 +181,6 @@ class CoreNode(Node):
 
     def pid_controllers_set_callback(self, data):  # 设置PID控制器工作状态
         buff = b"\xfa\xaf\x01" + \
-            struct.pack("<BBBBBB", data.x, data.y, data.z,
-                        data.rx, data.ry, data.rz)+b"\xfb\xbf"
-        self.usb1_writer.write(buff)
-
-    def pid_controllers_set_callback(self, data):  # 设置PID控制器工作状态
-        buff = b"\xfa\xaf\x01" + \
             struct.pack("<BBBBBBBB", data.x, data.y, data.z,data.vx, data.vy,
                         data.rz, data.rx, data.ry)+b"\xfb\xbf"
         self.usb1_writer.write(buff)

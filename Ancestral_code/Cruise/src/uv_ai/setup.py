@@ -1,11 +1,11 @@
-from setuptools import setup
+from setuptools import find_packages, setup
 
 package_name = 'uv_ai'
 
 setup(
     name=package_name,
     version='0.0.0',
-    packages=[package_name],
+    packages=find_packages(include=[package_name, package_name + '.*']),
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
@@ -20,9 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "uv_detect = uv_ai.uv_detect:main",
             "uv_detect_test = uv_ai.uv_detect_test:main",
-            "uv_automation = uv_ai.uv_automaton:main",
+            "uv_automation = uv_ai.automation_refactor.automaton_node:main",
             "uv_detect_demo = uv_ai.uv_detect_demo:main",
             "uv_segment = uv_ai.uv_segment:main",
         ],

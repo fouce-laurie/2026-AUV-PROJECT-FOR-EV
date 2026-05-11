@@ -1,0 +1,2 @@
+- In this repo, Stonefish resource and include paths resolve from the `simulation_data` directory (e.g., `Cruise/stonefish_ros2/Data`), not from the scenario file's own folder.
+- For scenarios under `Data/stonefish_pool`, use paths like `stonefish_pool/...` in `<include file=...>`, texture `look` paths, and mesh filenames when `simulation_data` is the Data root.

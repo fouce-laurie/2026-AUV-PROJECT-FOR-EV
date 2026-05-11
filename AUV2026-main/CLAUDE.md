@@ -1,0 +1,1 @@
+/home/origin/AUV2026/doc/memories/ *

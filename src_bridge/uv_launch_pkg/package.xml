@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>uv_launch_pkg</name>
+  <version>0.0.0</version>
+  <description>Package containing launch files for UV detection system</description>
+  <maintainer email="nvidia@example.com">nvidia</maintainer>
+  <license>Apache-2.0</license>
+
+  <!-- 构建工具依赖 -->
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <!-- Launch相关编译依赖 -->
+  <build_depend>launch</build_depend>
+  <build_depend>launch_ros</build_depend>
+
+  <!-- Launch相关运行依赖 -->
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+  <!-- 测试依赖 -->
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>pytest</test_depend>
+
+  <!-- 导出构建类型 -->
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
+    

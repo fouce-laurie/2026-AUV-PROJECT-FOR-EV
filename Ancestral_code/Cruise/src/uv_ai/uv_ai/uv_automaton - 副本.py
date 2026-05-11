@@ -6,7 +6,7 @@ import termios
 import struct
 import threading
 import json
-import argparse
+import argparse; # 导入argparse模块，用于解析命令行参数
 from uv_control_py import Pid
 from uv_control_py.CoordinateSystem import CoordinateSystems, MotionState, Cs_Back, Cs_Move, AngleCorrect
 
@@ -1428,7 +1428,7 @@ class CoreNode(Node):
 
                     t_x = self.robot.target_inbase.vector.x = self.down_cam.target_inworld.vector.x
                     t_y = self.robot.target_inbase.vector.y = self.down_cam.target_inworld.vector.y
-                    t_z =  self.robot.target_inbase.vector.z = self.down_cam.target_inworld.vector.z
+                    t_z = self.robot.target_inbase.vector.z = self.down_cam.target_inworld.vector.z
                     t_rx = self.robot.target_inbase.vector.rx = self.down_cam.target_inworld.vector.rx
                     t_ry = self.robot.target_inbase.vector.ry = self.down_cam.target_inworld.vector.ry
                     t_rz = self.robot.target_inbase.vector.rz = self.down_cam.target_inworld.vector.rz
